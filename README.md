@@ -1,3 +1,7 @@
+# Install Guide
+
+* https://www.kubernetes.org.cn/5653.html
+
 # Apache Kafka Helm Chart
 
 This is an implementation of Kafka StatefulSet found here:
