@@ -142,7 +142,7 @@ headless:
 ## External access.
 ##
 external:
-  enabled: false
+  enabled: true 
   # type can be either NodePort or LoadBalancer
   type: NodePort
   # annotations:
@@ -156,7 +156,8 @@ external:
   distinct: false
   servicePort: 19092
   firstListenerPort: 31090
-  domain: cluster.local
+  #domain: cluster.local
+  domain: cloudwalk.work 
   loadBalancerIP: []
   init:
     image: "lwolf/kubectl_deployer"
@@ -192,8 +193,9 @@ configurationOverrides:
   ##
   ## Setting "advertised.listeners" here appends to "PLAINTEXT://${POD_IP}:9092,", ensure you update the domain
   ## If external service type is Nodeport:
-  # "advertised.listeners": |-
-  #   EXTERNAL://kafka.cluster.local:$((31090 + ${KAFKA_BROKER_ID}))
+  "advertised.listeners": |-
+    EXTERNAL://kafka.cloudwalk.work:$((31090 + ${KAFKA_BROKER_ID}))
+    #EXTERNAL://kafka.cluster.local:$((31090 + ${KAFKA_BROKER_ID}))
   ## If external service type is LoadBalancer and distinct is true:
   # "advertised.listeners": |-
   #   EXTERNAL://kafka-$((${KAFKA_BROKER_ID})).cluster.local:19092
@@ -201,8 +203,8 @@ configurationOverrides:
   # "advertised.listeners": |-
   #   EXTERNAL://${LOAD_BALANCER_IP}:31090
   ## Uncomment to define the EXTERNAL Listener protocol
-  # "listener.security.protocol.map": |-
-  #   PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+  "listener.security.protocol.map": |-
+    PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
 
 ## set extra ENVs
 #   key: "value"
@@ -282,7 +284,7 @@ jmx:
 prometheus:
   ## Prometheus JMX Exporter: exposes the majority of Kafkas metrics
   jmx:
-    enabled: false
+    enabled: true 
 
     ## The image to use for the metrics collector
     image: solsson/kafka-prometheus-jmx-exporter@sha256
@@ -309,7 +311,7 @@ prometheus:
 
   ## Prometheus Kafka Exporter: exposes complimentary metrics to JMX Exporter
   kafka:
-    enabled: false
+    enabled: true 
 
     ## The image to use for the metrics collector
     image: danielqsj/kafka-exporter
@@ -370,7 +372,7 @@ prometheus:
 
   operator:
     ## Are you using Prometheus Operator?
-    enabled: false
+    enabled: true 
 
     serviceMonitor:
       # Namespace Prometheus is installed in
@@ -380,7 +382,7 @@ prometheus:
       ## [Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/prometheus/templates/prometheus.yaml#L65)
       ## [Kube Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/kube-prometheus/values.yaml#L298)
       selector:
-        prometheus: kube-prometheus
+        prometheus: inst-cc
 
 ## Kafka Config job configuration
 ##
